@@ -1,0 +1,17 @@
+server:
+  port: 8061
+#  servlet:
+#    context-path: /bbs
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/ncbbs?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: root
+    username: root
+
+logging:
+  path: C:/bbs-logs
+  level:
+    root: info
