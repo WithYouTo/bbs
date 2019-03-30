@@ -5,9 +5,12 @@ package com.nameless.bbs.service.impl;/**
  * @Created by zengxin
  */
 
+import com.nameless.bbs.entity.Posts;
+import com.nameless.bbs.entity.User;
 import com.nameless.bbs.mapper.PostsMapper;
 import com.nameless.bbs.mapper.UserMapper;
 import com.nameless.bbs.service.RankService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,7 +21,7 @@ import java.util.List;
  * @description
  * @date 2019/3/29 17:25
  */
-
+@Service
 public class RankServiceImpl implements RankService {
 
     @Resource
@@ -28,12 +31,13 @@ public class RankServiceImpl implements RankService {
     UserMapper userMapper;
 
     @Override
-    public List<Object> findPostsRank() {
-        return null;
+    public List<Posts> findPostsRank() {
+        return postsMapper.findHot();
     }
 
+
     @Override
-    public List<Object> findUserRank() {
-        return null;
+    public List<User> findUserRank() {
+        return userMapper.findNewUser();
     }
 }

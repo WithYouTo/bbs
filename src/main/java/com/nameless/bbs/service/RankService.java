@@ -1,5 +1,8 @@
 package com.nameless.bbs.service;
 
+import com.nameless.bbs.entity.Posts;
+import com.nameless.bbs.entity.User;
+
 import java.util.List;
 
 /**
@@ -14,12 +17,12 @@ public interface RankService {
      *
      * @return
      */
-    List<Object> findPostsRank();
+    List<Posts> findPostsRank();
 
     /**
      * 获取最近一周的新注册用户
      *
      * @return
      */
-    List<Object> findUserRank();
+    List<User> findUserRank();
 }

@@ -39,7 +39,6 @@ public class FileUtils {
                 dest.getParentFile().mkdirs();
             }
             file.transferTo(dest);
-            logger.info("【文件绝对路径：】" + Constants.HOST_IP_ADDRESS + storeFilePath);
             return Constants.HOST_IP_ADDRESS + storeFilePath;
         }
         return null;

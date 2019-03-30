@@ -29,25 +29,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private RedisService<User> redisService;
 
+    private final String icon = " http://127.0.0.1:8061/images/upload/default.png";
+
     private String REDIS_USER_KEY = Constants.REDIS_USER_KEY;
 
     private Integer REDIS_USER_TIME = Constants.REDIS_USER_TIME;
 
     @Override
     public boolean checkUserName(String username) {
-        User user = this.baseMapper.selectOne(new QueryWrapper<User>().eq("username", username));
-        return user != null ? true : false;
+        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("username", username));
+        return user == null ? true : false;
     }
 
     @Override
     public boolean checkUserEmail(String email) {
-        User user = this.baseMapper.selectOne(new QueryWrapper<User>().eq("email", email));
-        return user != null ? true : false;
+        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("email", email));
+        return user == null ? true : false;
     }
 
     @Override
     public User findByEmail(String email) {
-        return this.baseMapper.selectOne(new QueryWrapper<User>().eq("email", email));
+        return baseMapper.selectOne(new QueryWrapper<User>().eq("email", email));
     }
 
     @Override
@@ -55,9 +57,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = new User();
         user.setEmail(email);
         user.setUsername(username);
+        user.setIcon(icon);
         user.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
         user.setInitTime(new Date());
-        this.baseMapper.insert(user);
+        baseMapper.insert(user);
     }
 
     @Override
@@ -85,7 +88,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (cacheUser == null) {
             throw new ServiceProcessException("session过期,请重新登录");
         }
-        User user = this.baseMapper.selectOne(new QueryWrapper<User>().eq("id", cacheUser.getId()));
+        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("id", cacheUser.getId()));
         user.setUsername(username);
         user.setSex(sex);
         user.setSignature(signature);
@@ -99,7 +102,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (cacheUser == null) {
             throw new ServiceProcessException("session过期,请重新登录");
         }
-        User user = this.baseMapper.selectOne(new QueryWrapper<User>().eq("id", cacheUser.getId()));
+        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("id", cacheUser.getId()));
         user.setIcon(icon);
         baseMapper.updateById(user);
         redisService.cacheString(REDIS_USER_KEY + token, user, REDIS_USER_TIME);
@@ -111,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (cacheUser == null) {
             throw new ServiceProcessException("用户Session过期，请重新登录");
         }
-        User user = this.baseMapper.selectOne(new QueryWrapper<User>().eq("id", cacheUser.getId()));
+        User user = baseMapper.selectOne(new QueryWrapper<User>().eq("id", cacheUser.getId()));
         if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(oldpsd.getBytes()))) {
             throw new ServiceProcessException("原始密码错误,请重新输入");
         }

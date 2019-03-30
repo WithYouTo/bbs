@@ -18,8 +18,8 @@
                 <ul class="fly-list">
                     {{# layui.each(d.data, function(index, item){ }}
                     <li class="fly-list-li">
-                        <a href="../user/home?id={{item.user.id}}" class="fly-list-avatar">
-                            <img src="{{item.user.icon}}" alt="">
+                        <a href="../user/home?id={{item.user_id}}" class="fly-list-avatar">
+                            <img src="{{item.icon}}" alt="">
                         </a>
                         <h2 class="fly-tip">
                             <a href="../posts/detail?id={{item.id}}">{{item.title}}</a>
@@ -27,11 +27,11 @@
                             {{ item.good == true ? '<span class="fly-tip-jing">精帖</span>' : ''}}
                         </h2>
                         <p>
-                            <span><a href="../user/home?id={{item.user.id}}">{{item.user.username}}</a></span>
-                            <span>{{item.initTime}}</span>
-                            <span>{{item.label.name}}</span>
+                            <span><a href="../user/home?id={{item.user_id}}">{{item.username}}</a></span>
+                            <span>{{item.init_time}}</span>
+                            <span>{{item.name}}</span>
                             <span class="fly-list-hint">
-  <i class="iconfont" title="回答">&#xe60c;</i> {{ item.replyCount }}
+  <i class="iconfont" title="回答">&#xe60c;</i> {{ item.reply_count }}
             </span>
                         </p>
                     </li>
@@ -59,12 +59,13 @@
     <!--根据url param 翻页获取信息-->
     function loadPosts(laytpl, laypage, pageNo, renderpager) {
         var id = $.getUrlParam('id');
-
+        console.log(id);
+        console.log(pageNo);
         $.get(quark_label_posts_api + id, {
             pageNo: pageNo,
             length: 15,
         }, function (data) {
-
+            console.log(data);
             if (data.status == 500) {
                 layer.msg(data.error, {icon: 5});
                 return;
@@ -75,11 +76,12 @@
             });
 
             if (!renderpager) return;
-
+            console.log(data.pageSize);
+            console.log(data.total);
             laypage.render({
                 elem: 'pager'
-                , limit: data.total
-                , count: data.pageSize //总页数
+                , limit: data.pageSize
+                , count: data.total //总页数
                 , jump: function (obj, first) {
                     //得到了当前页，用于向服务端请求对应数据
                     if (!first) {

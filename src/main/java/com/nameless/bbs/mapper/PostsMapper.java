@@ -1,13 +1,13 @@
 package com.nameless.bbs.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.nameless.bbs.entity.Label;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.nameless.bbs.entity.Posts;
-import com.nameless.bbs.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -19,10 +19,12 @@ import java.util.List;
  */
 public interface PostsMapper extends BaseMapper<Posts> {
 
-    @Select(value = "select p.id, p.title , p.reply_count from quark_posts p where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <=DATE(p.init_time) ORDER by reply_count desc limit 10")
-    List<Object> findHot();
+    @Select(value = "select p.id, p.title , p.reply_count from posts p where DATE_SUB(CURDATE(), INTERVAL 30 DAY) <=DATE(p.init_time) ORDER by reply_count desc limit 10")
+    List<Posts> findHot();
 
-    List<Posts> findByUser(IPage<Posts> page, User user);
+    List<Map> selectPostsByPage(Page page, @Param("type") String type, @Param("search") String search);
 
-    List<Posts> findByLabel(IPage<Posts> page, Label label);
+    List<Map> getPostsByLabel(Page page, Integer labelId);
+
+    Map getPostsById(Integer postsId);
 }
