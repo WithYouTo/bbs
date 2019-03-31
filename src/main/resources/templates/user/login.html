@@ -60,7 +60,6 @@
     layui.use(['form'], function () {
         var form = layui.form;
         form.on('submit(*)', function (data) {
-            console.log(quark_login_api);
             $.post(quark_login_api, data.field,
                 function (data) {
                     if (data.status == 200) {

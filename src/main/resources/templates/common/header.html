@@ -30,7 +30,6 @@
         //获取用户信息渲染页面
         var htm = "";
         $.get(quark_getUser_api + getCookie(), function (data) {
-            console.log(data);
             if (data.status == 200) {
                 var count = data.data.messagecount;
                 if (count != 0) {

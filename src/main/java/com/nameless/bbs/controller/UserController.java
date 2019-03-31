@@ -3,8 +3,8 @@ package com.nameless.bbs.controller;
 
 import com.nameless.bbs.base.BaseController;
 import com.nameless.bbs.dto.RespResult;
-import com.nameless.bbs.entity.Posts;
 import com.nameless.bbs.entity.User;
+import com.nameless.bbs.service.PostsService;
 import com.nameless.bbs.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -14,9 +14,9 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -33,6 +33,9 @@ public class UserController extends BaseController {
 
     @Resource
     UserService userService;
+
+    @Resource
+    PostsService postsService;
 
     @ApiOperation("注册接口")
     @ApiImplicitParams({
@@ -107,7 +110,7 @@ public class UserController extends BaseController {
             if (user == null) {
                 return RespResult.warn("session过期,请重新登录");
             }
-            long count = new Long("3");
+            long count = new Long("0");
             map.put("user", user);
             map.put("messagecount", count);
             return RespResult.ok(map);
@@ -180,7 +183,7 @@ public class UserController extends BaseController {
             if (user == null || userid == null) {
                 return RespResult.warn("用户不存在");
             }
-            List<Posts> postss = new ArrayList<>();
+            List<Map> postss = postsService.getPostsByUser(userid);
             HashMap<String, Object> map = new HashMap<>();
             map.put("posts", postss);
             map.put("user", user);

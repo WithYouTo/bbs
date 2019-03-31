@@ -7,6 +7,7 @@ import com.nameless.bbs.entity.Posts;
 import com.nameless.bbs.entity.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,7 +43,7 @@ public interface PostsService extends IService<Posts> {
      * @param userId
      * @return
      */
-    IPage<Posts> getPostsByUser(Integer page, Integer pageSize, String userId);
+    List<Map> getPostsByUser(Integer userId);
 
     /**
      * 根据标签分页获取获取Posts

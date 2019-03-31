@@ -100,7 +100,6 @@
 
     <!--根据url param 翻页获取信息-->
     function loadPosts(laytpl, laypage, pageNo, renderpager) {
-        console.log(renderpager);
         var type = $.getUrlParam('type');
         var search =$.getUrlParam('search');
         $.get(quark_posts_get_api, {
@@ -119,15 +118,11 @@
             });
 
             if (!renderpager) return;
-            console.log(data.pageSize);
-            console.log(data.total);
             laypage.render({
                 elem: 'pager'
                 , limit: data.pageSize
                 , count: data.total //总条数
                 , jump: function (obj, first) {
-                    console.log(obj);
-                    console.log(first);
                     //得到了当前页，用于向服务端请求对应数据
                     if (!first) {
                         loadPosts(laytpl, laypage, obj.curr, false);
@@ -145,7 +140,6 @@
 
         //获取新用户
         $.get(quark_rank_users_api,function (data) {
-            console.log(data);
             var tpl = $("#user").html();
             laytpl(tpl).render(data,function (html) {
                 $("#users").html(html);
@@ -154,7 +148,6 @@
 
         //获取热门帖子
         $.get(quark_rank_posts_api,function (data) {
-            console.log(data);
             var tpl = $("#hot").html();
             laytpl(tpl).render(data,function (html) {
                 $("#hots").html(html);

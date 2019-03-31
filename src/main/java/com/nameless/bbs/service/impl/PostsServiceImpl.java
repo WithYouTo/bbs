@@ -1,7 +1,6 @@
 package com.nameless.bbs.service.impl;
 
 import cn.hutool.core.convert.Convert;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 
@@ -78,11 +78,10 @@ public class PostsServiceImpl extends ServiceImpl<PostsMapper, Posts> implements
     }
 
     @Override
-    public IPage<Posts> getPostsByUser(Integer current, Integer pageSize, String userId) {
-        Page<Posts> page = new Page<>(current, Convert.toLong(pageSize));
-        return baseMapper.selectPage(page, new QueryWrapper<Posts>()
-                .eq("user_id", userId));
+    public List<Map> getPostsByUser(Integer userId) {
+        return baseMapper.getPostsByUser(userId);
     }
+
 
     @Override
     public IPage<Map> getPostsByLabel(Label label, int pageNo, int lenght) {

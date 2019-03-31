@@ -59,13 +59,10 @@
     <!--根据url param 翻页获取信息-->
     function loadPosts(laytpl, laypage, pageNo, renderpager) {
         var id = $.getUrlParam('id');
-        console.log(id);
-        console.log(pageNo);
         $.get(quark_label_posts_api + id, {
             pageNo: pageNo,
             length: 15,
         }, function (data) {
-            console.log(data);
             if (data.status == 500) {
                 layer.msg(data.error, {icon: 5});
                 return;
@@ -76,8 +73,6 @@
             });
 
             if (!renderpager) return;
-            console.log(data.pageSize);
-            console.log(data.total);
             laypage.render({
                 elem: 'pager'
                 , limit: data.pageSize

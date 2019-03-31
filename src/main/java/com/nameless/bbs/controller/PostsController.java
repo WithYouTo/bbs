@@ -97,8 +97,9 @@ public class PostsController extends BaseController {
             if (!type.equals("good") && !type.equals("top") && !type.equals("")) {
                 return RespResult.error("类型错误!");
             }
-            IPage<Map> page = postsService.selectPostsByPage(pageNo - 1, length, type, search);
-            return RespResult.ok(page.getRecords(), length, Convert.toInt(page.getTotal()));
+            String searchConvert = Convert.convertCharset(search, "ISO-8859-1", "UTF-8");
+            IPage<Map> page = postsService.selectPostsByPage(pageNo, length, type, searchConvert);
+            return RespResult.ok(page.getRecords(), page.getSize(), Convert.toInt(page.getTotal()));
         });
         return result;
     }
@@ -122,7 +123,7 @@ public class PostsController extends BaseController {
             }
             Map postMap = postsService.getPostsById(postsid);
             map.put("posts", postMap);
-            IPage<Map> page = replyService.getReplyByPage(postsid, pageNo - 1, length);
+            IPage<Map> page = replyService.getReplyByPage(postsid, pageNo, length);
             map.put("replys", page.getRecords());
             return RespResult.ok(map, page.getSize(), Convert.toInt(page.getTotal()));
         });
@@ -147,7 +148,7 @@ public class PostsController extends BaseController {
             if (label == null) {
                 return RespResult.error("标签不存在");
             }
-            IPage<Map> page = postsService.getPostsByLabel(label, pageNo - 1, length);
+            IPage<Map> page = postsService.getPostsByLabel(label, pageNo, length);
             return RespResult.ok(page.getRecords(), page.getSize(), Convert.toInt(page.getTotal()));
         });
 

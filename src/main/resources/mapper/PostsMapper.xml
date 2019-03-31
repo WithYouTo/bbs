@@ -57,4 +57,17 @@
     where a.id = #{postsId}
     </select>
 
+
+    <select id="getPostsByUser" resultType="Map" parameterType="Integer">
+        SELECT
+        a.*,
+        b.username,
+        b.icon
+        FROM
+        posts a left join user b on a.user_id = b.id
+        where  a.user_id = #{user_id}
+        order by a.init_time desc
+        limit 10
+    </select>
+
 </mapper>

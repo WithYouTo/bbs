@@ -14,4 +14,11 @@ spring:
 logging:
   path: C:/bbs-logs
   level:
-    root: info
+    root: debug
+
+    logging:
+      level:
+        com:
+          nameless:
+            bbs:
+              mapper: debug

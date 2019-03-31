@@ -4,6 +4,11 @@ spring:
   http:
     encoding:
       force: true
+      charset: UTF-8
+      enabled: true
+      server:
+        tomcat:
+          uri-encoding: UTF-8
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
