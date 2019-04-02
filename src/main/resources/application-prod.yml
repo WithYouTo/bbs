@@ -1,12 +1,12 @@
 server:
   port: 8061
-#  servlet:
-#    context-path: /bbs
+  servlet:
+    context-path: /bbs
 
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://127.0.0.1:3306/ncbbs?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    url: jdbc:mysql://119.3.232.29:3306/ncbbs?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: darling520@Mark

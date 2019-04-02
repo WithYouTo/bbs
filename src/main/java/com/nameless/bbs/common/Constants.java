@@ -7,7 +7,7 @@ package com.nameless.bbs.common;
 public class Constants {
     //Upload常量
 
-    public static final String HOST_IP_ADDRESS = "http://127.0.0.1:8061";
+    public static final String HOST_IP_ADDRESS = "http://127.0.0.1:8061/bbs";
 
     public static final String SEPARATOR = "/";
 

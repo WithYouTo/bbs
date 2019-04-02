@@ -10,9 +10,8 @@
                 <a class="nav-this" th:href="@{/label}">
                     <i class="iconfont icon-wenda"></i>标签
                 </a>
-                <!-- <a class="nav-this" th:href="@{/chat}">
-                     <i class="iconfont icon-wenda"></i>聊天室
-                 </a>-->
+                <a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} "
+                   id="contextPath"></a>
             </div>
 
             <div class="nav-user">
@@ -26,26 +25,30 @@
     <script th:src="@{/js/quark_api.js}"></script>
     <script th:src="@{/js/sockjs.min.js}"></script>
     <script th:src="@{/js/stomp.min.js}"></script>
+
+
     <script>
+        var contextPath = $('#contextPath').attr('href');//获取应用的根目录，我的绝对路径是http://localhost:8061/bbs/
+        console.log(contextPath);
         //获取用户信息渲染页面
         var htm = "";
         $.get(quark_getUser_api + getCookie(), function (data) {
             if (data.status == 200) {
                 var count = data.data.messagecount;
                 if (count != 0) {
-                    htm += "<a class='nav-message' href='../user/message' title=''>" + count + "</a>";
+                    htm += "<a class='nav-message'  th:href='@{/user/message}'   title=''>" + count + "</a>";
                 }
-                htm += "<a class='avatar' href='/user/home?id=" + data.data.user.id + "'>" +
+                htm += "<a class='avatar' href= '/bbs/user/home?id=" + data.data.user.id + "'>" +
                     "<img src='" + data.data.user.icon + "'>" +
                     "<cite>" + data.data.user.username + "</cite>" +
                     "</a>" +
                     "<div class='nav'>" +
-                    "<a href='/user/set'><i class='iconfont icon-shezhi'></i>设置</a>" +
+                    "<a href='/bbs/user/set'><i class='iconfont icon-shezhi'></i>设置</a>" +
                     "<a href='' onclick='logout()'><i class='iconfont icon-tuichu' style='top: 0; font-size: 22px;'></i>退了</a>" +
                     "</div>";
             } else {
-                htm = "<a class='unlogin' href='#'><i class='iconfont icon-touxiang'></i></a>" +
-                    "<span><a href='/user/login'>登入</a><a href='/user/register'>注册</a></span>";
+                htm = "<a class='unlogin' href='/bbs/user/login'><i class='iconfont icon-touxiang'></i></a>" +
+                    "<span><a href='/bbs/user/login'>登入</a><a href='/bbs/user/register'>注册</a></span>";
             }
 
             $(".nav-user").append(htm);
@@ -59,7 +62,7 @@
                 if (obj.status == 200) {
                     layer.msg("登出成功", {icon: 1});
                     deleteCookie();
-                    location.href = "/index";
+                    location.href = "/bbs/index";
                 } else {
                     layer.msg(obj.error, {icon: 5});
                 }

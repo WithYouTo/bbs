@@ -1,5 +1,5 @@
 /*链接*/
-var basePath = "http://127.0.0.1:8061";
+var basePath = "http://127.0.0.1:8061/bbs";
 basePath = basePath + "/rest";
 var quark_login_api = basePath + "/user/login";
 var quark_getUser_api = basePath + "/user/message/";
@@ -25,18 +25,18 @@ var quark_chat_webSocket_api = "ws://127.0.0.1:8083/websocket";
 function setCookie(data) {
     var expiresDate = new Date();
     expiresDate.setTime(expiresDate.getTime() + (60 * 60 * 1000));
-    $.cookie("QUARK_TOKEN", data, {
+    $.cookie("NAMELESS_TOKEN", data, {
         path: '/',
         expires: 1
     });
 }
 
 function getCookie() {
-    return $.cookie('QUARK_TOKEN');
+    return $.cookie('NAMELESS_TOKEN');
 }
 
 function deleteCookie() {
-    $.cookie("QUARK_TOKEN", null, {
+    $.cookie("NAMELESS_TOKEN", null, {
         path: '/'
     });
 }

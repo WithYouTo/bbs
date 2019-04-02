@@ -56,7 +56,7 @@
 <script th:src="@{/js/jquery.cookie.js}"></script>
 <script th:src="@{/js/quark_api.js}"></script>
 
-<script>
+<script  th:inline="javascript">
     layui.use(['form'], function () {
         var form = layui.form;
         form.on('submit(*)', function (data) {
@@ -69,7 +69,7 @@
                             icon: 1,
                             time: 1000 //1秒关闭
                         }, function () {
-                            location.href = "/index";
+                            location.href = "/bbs/index";
                         });
 
                     } else if (data.status == 400) {
