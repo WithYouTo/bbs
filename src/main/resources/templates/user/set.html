@@ -31,12 +31,6 @@
                 密码设置
             </a>
         </li>
-  <!--      <li class="layui-nav-item">
-            <a href="message.html">
-                <i class="layui-icon">&#xe611;</i>
-                我的消息
-            </a>
-        </li>-->
     </ul>
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab-content" style="padding: 20px 0;">
@@ -45,14 +39,14 @@
                     <div class="layui-form-item">
                         <label for="L_username" class="layui-form-label">昵称</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="L_username" name="username" required lay-verify="required" autocomplete="off" value="" class="layui-input">
+                            <input type="text" id="L_username" name="username" required lay-verify="required" autocomplete="off"  class="layui-input">
                         </div>
 
                     </div>
                     <div class="layui-form-item">
                         <label for="L_sex" class="layui-form-label">性别</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="L_sex" name="sex" autocomplete="off" value="" class="layui-input">
+                            <input type="text" id="L_sex" name="sex" autocomplete="off" class="layui-input">
                         </div>
                         <div class="layui-form-mid layui-word-aux">请填入男/女</div>
                     </div>
@@ -75,6 +69,21 @@
 <div th:include="common/footer::footer"></div>
 
 <script>
+    //获取用户信息
+    $.get(quark_getUser_api + getCookie(), function (data) {
+        console.log(data);
+        if (data.status == 200) {
+             $('#L_username').val(data.user.username);
+             if(data.user.sex == 0){
+                 $('#L_sex').val('男');
+             }else{
+                 $('#L_sex').val('女');
+             }
+             $('#signature').val(data.user.signature);
+        }
+    });
+
+
     layui.use(['form'],function () {
         var token = getCookie();
         var sexnumber;

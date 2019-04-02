@@ -53,7 +53,7 @@
     b.icon
     FROM
     posts a
-    LEFT JOIN USER b ON a.user_id = b.id
+    LEFT JOIN user b ON a.user_id = b.id
     where a.id = #{postsId}
     </select>
 
@@ -65,7 +65,7 @@
         b.icon
         FROM
         posts a left join user b on a.user_id = b.id
-        where  a.user_id = #{user_id}
+        where  a.user_id = #{userId}
         order by a.init_time desc
         limit 10
     </select>
