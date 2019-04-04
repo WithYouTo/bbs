@@ -36,9 +36,8 @@
                         <label class="layui-form-label">标签选择框</label>
                         <div class="layui-input-block">
                             <div class="layui-input-inline">
-                                <select lay-verify="required" lay-search="" id="label_select" name="labelId">
-                                    <option value="">直接选择或搜索选择</option>
-
+                                <select id="label_select" name="labelId" lay-verify="required" lay-search="">
+                                    <!-- <option value="">直接选择或搜索选择</option>-->
                                 </select>
                             </div>
                         </div>
@@ -62,14 +61,23 @@
     $.get(quark_label_getall_api, function (data) {
         var htm = "";
         if (data.status == 200) {
-            for (var i = 0; i < data.data.length; i++) {
-                htm += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
-            }
+            // for (var i = 0; i < data.data.length; i++) {
+            //     htm += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+            // }
+            jQuery("#label_select").empty();
+            var all = "<option value=''>直接选择或搜索选择</option>";
+            jQuery("#label_select").append(all);
+            layui.each(data.data, function (index, item) {
+                var option = '<option value=' + item.id + '>' + item.name + '</option>';
+                jQuery("#label_select").append(option);
+            });
+            layui.form.render('select');
+
         } else {
             layer.msg(data.error, {icon: 5});
         }
 
-        $("#label_select").append(htm);
+        //$("#label_select").append(htm);
     });
 
     layui.use(['form', 'layedit'], function () {
@@ -89,22 +97,22 @@
 
         form.on('submit(*)', function (data) {
             var layeditval = layedit.getContent(content);
-            if (layeditval ==""|| layeditval == undefined || layeditval == null){
-                layer.msg("输入的内容不能为空",{icon:7});
+            if (layeditval == "" || layeditval == undefined || layeditval == null) {
+                layer.msg("输入的内容不能为空", {icon: 7});
                 return false;
             }
             $.post(quark_posts_add_api, {
                     title: data.field.title,
-                    content:layedit.getContent(content),
-                    labelId:data.field.labelId,
-                    token:getCookie()
+                    content: layedit.getContent(content),
+                    labelId: data.field.labelId,
+                    token: getCookie()
                 },
                 function (data) {
                     if (data.status == 200) {
                         layer.msg("发布成功", {
                             icon: 1,
                             time: 1000 //1秒关闭
-                        }, function(){
+                        }, function () {
                             location.href = "/bbs/index";
                         });
                     } else if (data.status == 400) {

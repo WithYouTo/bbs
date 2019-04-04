@@ -22,3 +22,8 @@ logging:
           nameless:
             bbs:
               mapper: debug
+
+  spring:
+    http:
+      multipart:
+        location: D:\home\upload_tmp

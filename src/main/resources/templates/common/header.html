@@ -28,8 +28,6 @@
 
 
     <script>
-        var contextPath = $('#contextPath').attr('href');//获取应用的根目录，我的绝对路径是http://localhost:8061/bbs/
-        console.log(contextPath);
         //获取用户信息渲染页面
         var htm = "";
         $.get(quark_getUser_api + getCookie(), function (data) {
@@ -60,9 +58,12 @@
                 token: getCookie()
             }, function (obj) {
                 if (obj.status == 200) {
+                    debugger;
                     layer.msg("登出成功", {icon: 1});
-                    deleteCookie();
-                    location.href = "/bbs/index";
+                    setTimeout(function () {
+                        deleteCookie();
+                        location.href = "/bbs/index";
+                    }, 1000)
                 } else {
                     layer.msg(obj.error, {icon: 5});
                 }

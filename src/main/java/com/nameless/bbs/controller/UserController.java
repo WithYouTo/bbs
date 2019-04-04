@@ -168,7 +168,6 @@ public class UserController extends BaseController {
             userService.LogoutUser(token);
             return RespResult.ok();
         });
-
         return result;
     }
 

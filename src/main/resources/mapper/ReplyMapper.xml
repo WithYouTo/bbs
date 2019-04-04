@@ -3,7 +3,7 @@
 <mapper namespace="com.nameless.bbs.mapper.ReplyMapper">
 
 
-    <select id="getReplyByPage" resultType="Map">
+    <select id="getReplyByPage" resultType="Map" parameterType="Integer">
         SELECT
         a.*,
         b.username,

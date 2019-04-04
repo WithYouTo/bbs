@@ -1,6 +1,7 @@
 package com.nameless.bbs.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.nameless.bbs.base.BaseController;
 import com.nameless.bbs.dto.RespResult;
 import com.nameless.bbs.entity.Label;
@@ -15,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author cindy
@@ -33,7 +34,7 @@ public class LabelController extends BaseController {
     public RespResult getAllLabel() {
 
         RespResult result = restProcessor(() -> {
-            List<Label> labels = labelService.list();
+            List<Label> labels = labelService.list(new QueryWrapper<>());
             return RespResult.ok(labels);
         });
         return result;

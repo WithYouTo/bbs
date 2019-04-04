@@ -45,21 +45,24 @@
                     <div class="layui-form-item">
                         <label for="L_oldpsd" class="layui-form-label">旧密码</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="L_oldpsd" name="oldpsd" required lay-verify="required" autocomplete="off" value="" class="layui-input">
+                            <input type="text" id="L_oldpsd" name="oldpsd" required lay-verify="required"
+                                   autocomplete="off" value="" class="layui-input">
                         </div>
 
                     </div>
                     <div class="layui-form-item">
                         <label for="L_newpsd" class="layui-form-label">新密码</label>
                         <div class="layui-input-inline">
-                            <input type="password" id="L_newpsd" name="newpsd" autocomplete="off" value="" class="layui-input">
+                            <input type="password" id="L_newpsd" name="newpsd" autocomplete="off" value=""
+                                   class="layui-input">
                         </div>
                     </div>
 
                     <div class="layui-form-item">
                         <label for="L_newpsd_r" class="layui-form-label">重复新密码</label>
                         <div class="layui-input-inline">
-                            <input type="password" id="L_newpsd_r" name="newpsdr" autocomplete="off" value="" class="layui-input">
+                            <input type="password" id="L_newpsd_r" name="newpsdr" autocomplete="off" value=""
+                                   class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -72,41 +75,39 @@
 </div>
 
 
-
-
 <div th:include="common/footer::footer"></div>
 
 <script>
-    layui.use(['form'],function () {
+    layui.use(['form'], function () {
         var token = getCookie();
 
         var form = layui.form,
             layer = layui.layer;
 
-        form.on('submit(*)',function (data) {
+        form.on('submit(*)', function (data) {
             var newpsd = data.field.newpsd;
-            var newpsdr =data.field.newpsdr;
+            var newpsdr = data.field.newpsdr;
 
-            if (newpsd!==newpsdr){
-                layer.msg("重复密码输入错误",{icon:7});
+            if (newpsd !== newpsdr) {
+                layer.msg("重复密码输入错误", {icon: 7});
                 return false;
             }
 
             $.ajax({
-                url:quark_user_update_psd_api+token,
-                type:'PUT',
-                data:{
-                    newpsd:newpsd,
-                    oldpsd:data.field.oldpsd,
+                url: quark_user_update_psd_api + token,
+                type: 'PUT',
+                data: {
+                    newpsd: newpsd,
+                    oldpsd: data.field.oldpsd,
                 },
-                success:function (data) {
+                success: function (data) {
 
                     if (data.status == 200) {
                         layer.msg("修改成功", {
                             icon: 1,
                             time: 1000 //1秒关闭
-                        }, function(){
-                            location.href = "/user/login";
+                        }, function () {
+                            location.href = "/bbs/user/login";
                         });
                     } else if (data.status == 400) {
                         layer.msg(data.error, {icon: 7});
@@ -115,7 +116,7 @@
                     }
                 }
 
-            },"json");
+            }, "json");
             return false;
         })
 

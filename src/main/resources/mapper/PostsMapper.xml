@@ -54,7 +54,7 @@
     FROM
     posts a
     LEFT JOIN user b ON a.user_id = b.id
-    where a.id = #{postsId}
+    where a.id = #{id}
     </select>
 
 

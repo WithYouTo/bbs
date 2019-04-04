@@ -78,7 +78,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public void LogoutUser(String token) {
-        User user = getUserByToken(token);
         redisService.deleteString(REDIS_USER_KEY + token);
     }
 

@@ -50,8 +50,8 @@ public interface PostsMapper extends BaseMapper<Posts> {
     /**
      * 查询帖子详情
      *
-     * @param postsId
+     * @param id
      * @return
      */
-    Map getPostsById(Integer postsId);
+    Map getPostsById(Integer id);
 }
